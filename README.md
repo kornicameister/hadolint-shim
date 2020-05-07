@@ -5,7 +5,7 @@ Provides `sh` compatible shim that wraps hadolint docker execution
 
 ### One liner
 
-`curl -sSL https://raw.githubusercontent.com/kornicameister/hadolint-shim/master/hadolint -o $HOME/.local/bin`
+`curl -sSL https://raw.githubusercontent.com/kornicameister/hadolint-shim/master/hadolint -o $HOME/.local/bin/hadolint ; chmod +x $HOME/.local/bin/hadolint ; sh -c 'hadolint --version'`
 
 This is faster installation method but be **warned** that it assumes that `$HOME/.local/.bin`:
 - exists
