@@ -1,5 +1,7 @@
 # hadolint-shim
-Provides `bash` compatible shim that wraps hadolint docker execution
+
+Provides `bash` compatible shim that wraps hadolint's `docker run hadolint/hadolint` execution to ease up usage
+on system where `hadolint` provides no static binaries.
 
 ## Installation
 
@@ -10,3 +12,7 @@ Provides `bash` compatible shim that wraps hadolint docker execution
 This is faster installation method but be **warned** that it assumes that `$HOME/.local/.bin`:
 - exists
 - is added to `$PATH`
+
+## Usage
+
+Exactly same as in [here](https://github.com/hadolint/hadolint#how-to-use)
