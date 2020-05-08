@@ -1,0 +1,39 @@
+---
+name: Install
+
+"on":
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  install:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04]
+        shell: [bash, zsh]
+        tool: [curl]
+        prefix: ["/usr/local", "~/.local"]
+    steps:
+      - name: Dependencies
+        run: |
+          sudo apt-get update -y -qq
+          sudo apt-get install -qq -y git ${{ matrix.tool }} ${{ matrix.shell }}
+      - name: "[PR] Install"
+        run: |
+          ${{ matrix.tool }} -sSL \
+            https://raw.githubusercontent.com/kornicameister/hadolint-shim/${{ github.head_ref }}/install.sh \
+            | PREFIX=${{ matrix.prefix }} sudo ${{ matrix.shell }} /dev/stdin
+        if: github.event_name == 'pull_request'
+      - name: "[Master] install"
+        run: |
+          ${{ matrix.tool }}  -sSL https://git.io/JfcCJ \
+          | sudo ${{ matrix.shell }} /dev/stdin
+        if: github.event_name == 'push'
+      - run: |
+          command -v hadolint >/dev/null 2>&1 || (
+            echo "hadolint not accessible"
+            exit 1
+          ) && echo "hadolint is accessible :)" 
