@@ -37,6 +37,11 @@ jobs:
             echo "hadolint not accessible"
             exit 1
           )
-          test $(command -v hadolint) -eq "${{ matrix.prefix }}/bin/hadolint"
+          test "$(command -v hadolint)" == "${{ matrix.prefix }}/bin/hadolint" || (
+            a="$(command -v hadolint)"
+            b="${{ matrix.prefix }}/bin/hadolint"
+            echo "${a} != ${b}"
+            exit 2
+          )
       - run: |
           hadolint --version
