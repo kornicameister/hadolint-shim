@@ -38,3 +38,5 @@ jobs:
             exit 1
           )
           test $(command -v hadolint) -eq "${{ matrix.prefix }}/bin/hadolint"
+      - run: |
+          hadolint --version
