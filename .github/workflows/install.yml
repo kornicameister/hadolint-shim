@@ -27,6 +27,9 @@ jobs:
       - name: Remove builtin hadolint
         run: |
           rm -rf $(command -v hadolint) || true
+      - name: Change $PATH
+        run: |
+          export PATH="$(readlink -f ${{ matrix.prefix }});$PATH"
       - name: "[PR] Install"
         run: |
           ${{ matrix.tool }} -sSL \
