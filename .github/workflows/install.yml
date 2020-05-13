@@ -7,6 +7,9 @@ name: Install
   pull_request:
     branches: [master]
 
+env:
+  INSTALL_TRACE: 1
+
 jobs:
   install:
     runs-on: ${{ matrix.os }}
@@ -20,20 +23,32 @@ jobs:
       - name: Dependencies
         run: |
           sudo apt-get update -y -qq
-          sudo apt-get install -qq -y git ${{ matrix.tool }} ${{ matrix.shell }}
+          sudo apt-get install -qq -y ${{ matrix.tool }} ${{ matrix.shell }}
+          docker pull hadolint/hadolint:latest -q
+      - name: Remove builtin hadolint
+        run: |
+          rm -rf $(command -v hadolint) || true
       - name: "[PR] Install"
         run: |
           ${{ matrix.tool }} -sSL \
             https://raw.githubusercontent.com/kornicameister/hadolint-shim/${{ github.head_ref }}/install.sh \
-            | PREFIX=${{ matrix.prefix }} sudo ${{ matrix.shell }} /dev/stdin
+            | PREFIX=${{ matrix.prefix }} sudo -E ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'pull_request'
       - name: "[Master] install"
         run: |
           ${{ matrix.tool }}  -sSL https://git.io/JfcCJ \
-          | sudo ${{ matrix.shell }} /dev/stdin
+          | PREFIX=${{ matrix.prefix }} sudo -E ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'push'
       - run: |
-          command -v hadolint >/dev/null 2>&1 || (
-            echo "hadolint not accessible"
-            exit 1
-          ) && echo "hadolint is accessible :)"
+          export PATH="${{ matrix.prefix }}/bin:$PATH"
+          
+          test "$(command -v hadolint)" == "$(readlink -f ${{ matrix.prefix }}/bin/hadolint)" || (
+            a="$(command -v hadolint)"
+            b="$(readlink -f ${{ matrix.prefix }}/bin/hadolint)"
+            echo "${a} != ${b}"
+            exit 2
+          ) && echo "hadolint :: $(command -v hadolint)"
+          
+      - run: |
+          export PATH="${{ matrix.prefix }}/bin:$PATH"
+          hadolint --version
