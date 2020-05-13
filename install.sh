@@ -8,7 +8,7 @@ if command -v docker >/dev/null 2>&1; then
     https://raw.githubusercontent.com/kornicameister/hadolint-shim/master/hadolint
 
   chmod +x "${dir}/hadolint"
-  sudo mv "${dir}/hadolint" "${PREFIX-/usr/local/bin}/hadolint"
+  cp -f "${dir}/hadolint" "${PREFIX-/usr/local}/bin/hadolint"
 
   rm -rf "${dir}"
 else
