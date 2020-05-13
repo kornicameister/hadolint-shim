@@ -4,8 +4,8 @@ if command -v docker >/dev/null 2>&1; then
   dir="$(mktemp -t -d hadolint-shim.XXXXXXXXXX)"
 
   curl -sSL \
-    -o "${dir}/hadolint"
-  https://raw.githubusercontent.com/kornicameister/hadolint-shim/master/hadolint
+    -o "${dir}/hadolint" \
+    https://raw.githubusercontent.com/kornicameister/hadolint-shim/master/hadolint
 
   chmod +x "${dir}/hadolint"
   sudo mv "${dir}/hadolint" "${PREFIX-/usr/local/bin}/hadolint"
