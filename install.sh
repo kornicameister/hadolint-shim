@@ -11,7 +11,7 @@ if command -v docker >/dev/null 2>&1; then
   installDir="${PREFIX-/usr/local}/bin" && mkdir -p "${installDir}"
   chmod +x "${dir}/hadolint" && cp -f "${dir}/hadolint" "${installDir}/hadolint"
   rm -rf "${dir}"
-  
+
 else
 
   echo "docker is required for hadolint-shim to work"
