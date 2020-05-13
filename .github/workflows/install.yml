@@ -7,6 +7,9 @@ name: Install
   pull_request:
     branches: [master]
 
+env:
+  INSTALL_TRACE: 1
+
 jobs:
   install:
     runs-on: ${{ matrix.os }}
