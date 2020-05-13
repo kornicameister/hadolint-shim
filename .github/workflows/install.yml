@@ -3,9 +3,9 @@ name: Install
 
 "on":
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   install:
@@ -36,4 +36,4 @@ jobs:
           command -v hadolint >/dev/null 2>&1 || (
             echo "hadolint not accessible"
             exit 1
-          ) && echo "hadolint is accessible :)" 
+          ) && echo "hadolint is accessible :)"
