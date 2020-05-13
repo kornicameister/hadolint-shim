@@ -31,12 +31,12 @@ jobs:
         run: |
           ${{ matrix.tool }} -sSL \
             https://raw.githubusercontent.com/kornicameister/hadolint-shim/${{ github.head_ref }}/install.sh \
-            | PREFIX=${{ matrix.prefix }} sudo ${{ matrix.shell }} /dev/stdin
+            | PREFIX=${{ matrix.prefix }} sudo -E ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'pull_request'
       - name: "[Master] install"
         run: |
           ${{ matrix.tool }}  -sSL https://git.io/JfcCJ \
-          | PREFIX=${{ matrix.prefix }} sudo ${{ matrix.shell }} /dev/stdin
+          | PREFIX=${{ matrix.prefix }} sudo -E ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'push'
       - run: |
           command -v hadolint >/dev/null 2>&1 || (
