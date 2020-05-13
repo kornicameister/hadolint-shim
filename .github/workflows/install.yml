@@ -23,10 +23,7 @@ jobs:
           sudo apt-get install -qq -y ${{ matrix.tool }} ${{ matrix.shell }}
       - name: Remove builtin hadolint
         run: |
-          command -v hadolint >/dev/null 2>&1 && (
-           echo "Removing builtin hadolint"
-           rm -rf $(command -v hadolint)
-          )
+          rm -rf $(command -v hadolint) || true
       - name: "[PR] Install"
         run: |
           ${{ matrix.tool }} -sSL \
