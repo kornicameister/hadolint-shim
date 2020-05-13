@@ -1,4 +1,4 @@
-# hadolint-shim
+# [hadolint](https://github.com/hadolint/hadolint)-shim
 
 Provides `bash` compatible shim that wraps hadolint's `docker run hadolint/hadolint` execution to ease up usage
 on system where `hadolint` provides no static binaries.
