@@ -24,6 +24,7 @@ jobs:
         run: |
           sudo apt-get update -y -qq
           sudo apt-get install -qq -y ${{ matrix.tool }} ${{ matrix.shell }}
+          docker pull hadolint/hadolint:latest -q
       - name: Remove builtin hadolint
         run: |
           rm -rf $(command -v hadolint) || true
