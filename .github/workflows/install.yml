@@ -39,13 +39,14 @@ jobs:
           | PREFIX=${{ matrix.prefix }} sudo -E ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'push'
       - run: |
-          export PATH="${{ matrix.prefix }}/bin:$PATH"
-          echo "hadolint :: $(command -v hadolint)"
-          test "$(command -v hadolint)" != "$(readlink -f ${{ matrix.prefix }}/bin/hadolint)" || (
+          export PATH="${{ matrix.prefix }}/bin:$PATH" && echo "$PATH"
+          
+          test "$(command -v hadolint)" == "$(readlink -f ${{ matrix.prefix }}/bin/hadolint)" || (
             a="$(command -v hadolint)"
             b="$(readlink -f ${{ matrix.prefix }}/bin/hadolint)"
             echo "${a} != ${b}"
             exit 2
-          )
+          ) && echo "hadolint :: $(command -v hadolint)"
+          
       - run: |
           hadolint --version
