@@ -40,7 +40,7 @@ jobs:
           | PREFIX=${{ matrix.prefix }} sudo -E ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'push'
       - run: |
-          export PATH="${{ matrix.prefix }}/bin:$PATH" && echo "$PATH"
+          export PATH="${{ matrix.prefix }}/bin:$PATH"
           
           test "$(command -v hadolint)" == "$(readlink -f ${{ matrix.prefix }}/bin/hadolint)" || (
             a="$(command -v hadolint)"
@@ -50,4 +50,5 @@ jobs:
           ) && echo "hadolint :: $(command -v hadolint)"
           
       - run: |
+          export PATH="${{ matrix.prefix }}/bin:$PATH"
           hadolint --version
