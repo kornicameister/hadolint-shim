@@ -22,7 +22,7 @@ jobs:
         run: |
           sudo apt-get update -y -qq
           sudo apt-get install -qq -y ${{ matrix.tool }} ${{ matrix.shell }}
-      - name: Remove builting hadolint
+      - name: Remove builtin hadolint
         run: |
            command -v hadolint >/dev/null 2>&1 && (
             echo "Removing builtin hadolint"

@@ -8,13 +8,10 @@ if command -v docker >/dev/null 2>&1; then
     -o "${dir}/hadolint" \
     https://raw.githubusercontent.com/kornicameister/hadolint-shim/master/hadolint
 
-  chmod +x "${dir}/hadolint"
-
   installDir="${PREFIX-/usr/local}/bin" && mkdir -p "${installDir}"
-  cp -f "${dir}/hadolint" "${installDir}/hadolint"
-
+  chmod +x "${dir}/hadolint" && cp -f "${dir}/hadolint" "${installDir}/hadolint"
   rm -rf "${dir}"
-
+  
 else
 
   echo "docker is required for hadolint-shim to work"
