@@ -33,7 +33,7 @@ jobs:
       - name: "[Master] install"
         run: |
           ${{ matrix.tool }}  -sSL https://git.io/JfcCJ \
-          | sudo ${{ matrix.shell }} /dev/stdin
+          | PREFIX=${{ matrix.prefix }} sudo ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'push'
       - run: |
           command -v hadolint >/dev/null 2>&1 || (
