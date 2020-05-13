@@ -30,7 +30,7 @@ jobs:
       - name: Change $PATH
         run: |
           sudo mkdir -p $(readlink -f ${{ matrix.prefix }})
-          export PATH="$(readlink -f ${{ matrix.prefix }});$PATH"
+          export PATH="$(readlink -f ${{ matrix.prefix }}):$PATH"
       - name: "[PR] Install"
         run: |
           ${{ matrix.tool }} -sSL \
