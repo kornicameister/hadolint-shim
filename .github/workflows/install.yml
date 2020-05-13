@@ -9,11 +9,10 @@ name: Install
 
 jobs:
   install:
-    runs-on: ubuntu-latest
-    container: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu:18.04, ubuntu:20.04]
+        os: [ubuntu-16.04, ubuntu-18.04]
         shell: [bash, zsh]
         tool: [curl]
         prefix: ["/usr/local", "~/.local"]
