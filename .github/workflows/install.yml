@@ -27,10 +27,6 @@ jobs:
       - name: Remove builtin hadolint
         run: |
           rm -rf $(command -v hadolint) || true
-      - name: Change $PATH
-        run: |
-          sudo mkdir -p $(readlink -f ${{ matrix.prefix }})
-          export PATH="$(readlink -f ${{ matrix.prefix }}):$PATH"
       - name: "[PR] Install"
         run: |
           ${{ matrix.tool }} -sSL \
@@ -43,8 +39,9 @@ jobs:
           | PREFIX=${{ matrix.prefix }} sudo -E ${{ matrix.shell }} /dev/stdin
         if: github.event_name == 'push'
       - run: |
+          export PATH="${{ matrix.prefix }}/bin:$PATH"
           echo "hadolint :: $(command -v hadolint)"
-          test "$(command -v hadolint)" == "$(readlink -f ${{ matrix.prefix }}/bin/hadolint)" || (
+          test "$(command -v hadolint)" != "$(readlink -f ${{ matrix.prefix }}/bin/hadolint)" || (
             a="$(command -v hadolint)"
             b="$(readlink -f ${{ matrix.prefix }}/bin/hadolint)"
             echo "${a} != ${b}"
